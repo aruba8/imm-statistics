@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<form action="/signup" method="post">
+    {{form.hidden_tag()}}
+    {{form.login.label}}{{form.login(size=30)}}<br>
+    {{form.country.label}}{{form.country}}<br>
+    {% for error in form.errors.login %}
+    <span style="color: red;">[{{error}}]</span>
+    {% endfor %}
+    {{form.password.label}}{{form.password(size=30)}}<br>
+    {{form.confirm.label}}{{form.confirm(size=30)}}<br>
+    {% for error in form.errors.login %}
+    <span style="color: red;">[{{error}}]</span>
+    {% endfor %}
+    <br>
+    <input type="submit" name="submit" value="Sign Up">
+</form>
+
+
+</body>
+</html>
