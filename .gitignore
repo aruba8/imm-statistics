@@ -1,0 +1,7 @@
+# Created by .gitignore support plugin (hsz.mobi)
+
+.idea
+*.pyc
+config.ini
+*.log
+test.py
