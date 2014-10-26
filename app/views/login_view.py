@@ -1,7 +1,7 @@
 __author__ = 'erik'
 
 from flask import render_template, flash, redirect, request, url_for
-from flask_login import login_user
+from flask_login import login_user, logout_user, login_required
 from app.forms.login_form import LoginForm
 from app.forms.signup_form import SignUpForm
 from app.models.user import User
@@ -47,4 +47,13 @@ def signup_page():
             return redirect(url_for('signup_page'))
     else:
         return redirect(url_for('signup_page'))
+
+@app.route('/logout')
+@login_required
+def logout():
+    # Remove the user information from the session
+    logout_user()
+
+
+    return redirect(request.args.get('next') or '/')
 

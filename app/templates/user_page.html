@@ -5,7 +5,31 @@
     <title></title>
 </head>
 <body>
-{{ userdata.username }}
+<table>
+    <tbody>
+    <tr><td>nickname :</td><td> {{ userdata.username }}</td></tr>
+    <tr><td>stream :</td><td> {{ userdata.stream }}</td></tr>
+    <tr><td>from :</td><td> {{ userdata.from_full }}</td></tr>
+    <tr><td>interview_location :</td><td> {{ userdata.interview_location }}</td></tr>
+    <tr><td>interview_date :</td><td> {{ userdata.interview_date }}</td></tr>
+    <tr><td>invitation_to_apply_date :</td><td> {{ userdata.invitation_to_apply_date }}</td></tr>
+    <tr><td>mpnp_request_additional_docs_date :</td><td> {{ userdata.mpnp_request_additional_docs_date }}</td></tr>
+    <tr><td>mpnp_nomination_date :</td><td> {{ userdata.mpnp_nomination_date }}</td></tr>
+    <tr><td>cio_received_date :</td><td> {{ userdata.cio_received_date }}</td></tr>
+    <tr><td>cio_processing_fee_date :</td><td> {{ userdata.cio_processing_fee_date }}</td></tr>
+    <tr><td>cio_file_number :</td><td> {{ userdata.cio_file_number }}</td></tr>
+    <tr><td>embassy :</td><td> {{ userdata.embassy }}</td></tr>
+    <tr><td>ecas_recieved :</td><td> {{ userdata.ecas_recieved }}</td></tr>
+    <tr><td>ecas_in_process :</td><td> {{ userdata.ecas_in_process }}</td></tr>
+    <tr><td>ecas_additional_documents_request1 :</td><td> {{ userdata.ecas_additional_documents_request1 }}</td></tr>
+    <tr><td>ecas_medical_forms :</td><td> {{ userdata.ecas_medical_forms }}</td></tr>
+    <tr><td>ecas_medical_exam_passed :</td><td> {{ userdata.ecas_medical_exam_passed }}</td></tr>
+    <tr><td>ecas_medical_results_received :</td><td> {{ userdata.ecas_medical_results_received }}</td></tr>
+    <tr><td>ecas_additional_documents_request2 :</td><td> {{ userdata.ecas_additional_documents_request2 }}</td></tr>
+    <tr><td>povl_date :</td><td> {{ userdata.povl_date }}</td></tr>
+    </tbody>
+</table>
+
 
 </body>
 </html>
