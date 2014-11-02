@@ -1,7 +1,8 @@
 __author__ = 'erik'
 
-from flask import render_template, flash, redirect, request, url_for
+from flask import render_template, flash, redirect, request, url_for, g
 from flask_login import login_user, logout_user, login_required
+from pycountry import countries
 from app.forms.login_form import LoginForm
 from app.forms.signup_form import SignUpForm
 from app.models.user import User
@@ -20,6 +21,9 @@ def user_loader(login):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+    if g.user.is_authenticated():
+        return redirect(url_for('index'))
+
     if form.validate_on_submit():
         username = form.login.data
         user = User.objects(username=username).first()
@@ -39,9 +43,10 @@ def signup_page():
                                                                                    form.confirm.data):
         if sessions.new_user(form.login.data, form.password.data):
             user = User.objects(username=form.login.data).first()
+            print user.username
             login_user(user)
-            from app.models.userdata import UserData
-            UserData(username=user.username).save()
+            from app.models.userdata import UserDataDB
+            UserDataDB(username=user.username, from_full=countries.get(alpha2=form.country.data).name).save()
             return redirect(url_for('user.show_user_page', username=user.username))
         else:
             return redirect(url_for('signup_page'))
@@ -55,5 +60,5 @@ def logout():
     logout_user()
 
 
-    return redirect(request.args.get('next') or '/')
+    return redirect(request.args.get('next') or '/login')
 

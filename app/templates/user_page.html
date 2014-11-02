@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
-<table>
+{% extends "base.html" %}
+
+{% block content %}
+<table class="table table-condensed table-hover">
     <tbody>
     <tr><td>nickname :</td><td> {{ userdata.username }}</td></tr>
     <tr><td>stream :</td><td> {{ userdata.stream }}</td></tr>
@@ -27,9 +23,11 @@
     <tr><td>ecas_medical_results_received :</td><td> {{ userdata.ecas_medical_results_received }}</td></tr>
     <tr><td>ecas_additional_documents_request2 :</td><td> {{ userdata.ecas_additional_documents_request2 }}</td></tr>
     <tr><td>povl_date :</td><td> {{ userdata.povl_date }}</td></tr>
+    <tr><td>
+        {% if g.user.username == userdata.username %}
+        <a class="btn btn-info" href="/user/edit">Edit</a>
+        {% endif %}
+    </td><td>{{g.user.username}}:{{userdata.username}}</td></tr>
     </tbody>
 </table>
-
-
-</body>
-</html>
+{% endblock %}

@@ -1,121 +1,122 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block content %}
 <form method="post" action="/user/edit">
-<table>
+<table class="table table-condensed">
     <tbody>
-    <tr><td>nickname :</td><td> {{ userdata.username }}</td></tr>
+    <tr><td><label class="col-sm-3 control-label">Nickname</label></td><td> <p class="form-control-static">{{ userdata.username }}</p></td></tr>
     <tr>
-        <td>stream :</td>
+        <td><label class="col-sm-3 control-label">Stream</label></td>
         <td>
-            {{form.stream}}
+            {{form.stream(class_='form-control')}}
         </td>
     </tr>
-    <tr><td>from :</td>
+    <tr><td><label class="col-sm-3 control-label">Your country</label></td>
         <td>
-            {{form.from_full}}
+            {{form.from_full(class_='form-control')}}
         </td>
     </tr>
-    <tr><td>interview_location :</td>
+    <tr><td><label class="col-sm-3 control-label">interview_location </label></td>
         <td>
-            {{form.interview_location}}
+            {{form.interview_location(class_='form-control')}}
         </td>
     </tr>
     <tr>
-        <td>interview_date :</td>
+        <td><label class="col-sm-3 control-label">interview_date </label></td>
         <td>
-            {{form.interview_date}}
+            {{form.interview_date(class_='date')}}
 
         </td>
     </tr>
-    <tr><td>invitation_to_apply_date :</td>
+    <tr><td><label class="col-sm-3 control-label">invitation_to_apply_date</label></td>
         <td>
-            {{form.invitation_to_apply_date}}
+            {{form.invitation_to_apply_date(class_='date')}}
         </td>
     </tr>
-    <tr><td>mpnp_file_date :</td>
+    <tr><td><label class="col-sm-3 control-label">mpnp_file_date</label></td>
         <td>
-            {{form.mpnp_file_date}}
+            {{form.mpnp_file_date(class_='date')}}
         </td>
     </tr>
-    <tr><td>mpnp_request_additional_docs_date :</td>
+    <tr><td><label class="col-sm-3 control-label">mpnp_request_additional_docs_date</label></td>
         <td>
-            {{form.mpnp_request_additional_docs_date}}
+            {{form.mpnp_request_additional_docs_date(class_='date')}}
         </td>
     </tr>
-    <tr><td>mpnp_nomination_date :</td>
+    <tr><td><label class="col-sm-3 control-label">mpnp_nomination_date</label></td>
         <td>
-            {{form.mpnp_nomination_date}}
+            {{form.mpnp_nomination_date(class_='date')}}
         </td>
     </tr>
-    <tr><td>cio_received_date :</td>
+    <tr><td><label class="col-sm-3 control-label">cio_received_date</label></td>
         <td>
-            {{form.cio_received_date}}
+            {{form.cio_received_date(class_='date')}}
         </td>
     </tr>
-    <tr><td>cio_processing_fee_date :</td>
+    <tr><td><label class="col-sm-3 control-label">cio_processing_fee_date</label></td>
         <td>
-            {{form.cio_processing_fee_date}}
+            {{form.cio_processing_fee_date(class_='date')}}
         </td>
     </tr>
-    <tr><td>cio_file_number :</td>
+    <tr><td><label class="col-sm-3 control-label">cio_file_number</label></td>
         <td>
-            {{form.cio_file_number}}
+            {{form.cio_file_number(class_='date')}}
         </td>
     </tr>
-    <tr><td>embassy :</td>
+    <tr><td><label class="col-sm-3 control-label">embassy</label></td>
         <td>
-            {{form.embassy}}
+            {{form.embassy(class_='form-control')}}
         </td>
     </tr>
-    <tr><td> ecas_recieved :</td>
+    <tr><td> <label class="col-sm-3 control-label">ecas_recieved</label></td>
         <td>
-            {{form.ecas_recieved}}
+            {{form.ecas_recieved(class_='date')}}
         </td>
     </tr>
-    <tr><td>ecas_in_process :</td>
+    <tr><td><label class="col-sm-3 control-label">ecas_in_process</label></td>
         <td>
-            {{form.ecas_in_process}}
+            {{form.ecas_in_process(class_='date')}}
         </td>
     </tr>
-    <tr><td>ecas_additional_documents_request1 :</td>
+    <tr><td><label class="col-sm-3 control-label">ecas_additional_documents_request1</label></td>
         <td>
-            {{form.ecas_additional_documents_request1}}
+            {{form.ecas_additional_documents_request1(class_='date')}}
         </td>
     </tr>
-    <tr><td>ecas_medical_forms :</td>
+    <tr><td><label class="col-sm-3 control-label">ecas_medical_forms</label></td>
         <td>
-            {{form.ecas_medical_forms}}
+            {{form.ecas_medical_forms(class_='date')}}
         </td>
     </tr>
-    <tr><td>ecas_medical_exam_passed :</td>
+    <tr><td><label class="col-sm-3 control-label">ecas_medical_exam_passed</label></td>
         <td>
-            {{form.ecas_medical_exam_passed}}
+            {{form.ecas_medical_exam_passed(class_='date')}}
         </td>
     </tr>
-    <tr><td>ecas_medical_results_received :</td>
+    <tr><td><label class="col-sm-3 control-label">ecas_medical_results_received</label></td>
         <td>
-            {{form.ecas_medical_results_received}}
+            {{form.ecas_medical_results_received(class_='date')}}
         </td>
     </tr>
-    <tr><td>ecas_additional_documents_request2 :</td>
+    <tr><td><label class="col-sm-3 control-label">ecas_additional_documents_request2</label></td>
         <td>
-            {{form.ecas_additional_documents_request2}}
+            {{form.ecas_additional_documents_request2(class_='date')}}
         </td>
     </tr>
-    <tr><td>povl_date :</td>
+    <tr><td><label class="col-sm-3 control-label">povl_date</label></td>
         <td>
-            {{form.povl_date}}
+            {{form.povl_date(class_='date')}}
         </td>
     </tr>
-    <tr><td></td><td><input type="submit" value="Save"/></td></tr>
+    <tr><td></td><td>
+        <input class="btn btn-success" type="submit" value="Save"/>
+    </td></tr>
     </tbody>
 </table>
 </form>
-
-</body>
-</html>
+<script>
+    $(function(){
+        $('.date').datepicker({ dateFormat: 'dd/mm/yy' });
+    });
+</script>
+{% endblock %}

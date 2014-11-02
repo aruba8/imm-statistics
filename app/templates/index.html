@@ -1,10 +1,64 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Header</h3>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive table-scrollable">
+                    <table class="table table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th>User Name</th>
+                                <th>Stream</th>
+                                <th>from</th>
+                                <th>Interview location</th>
+                                <th>Interview date</th>
+                                <th>Invitation to apply</th>
+                                <th>MPNP file date</th>
+                                <th>MPNP nomination date</th>
+                                <th>CIO documents received date</th>
+                                <th>CIO processing fee charged</th>
+                                <th>CIO file number</th>
+                                <th>Embassy</th>
+                                <th>Embassy documents received</th>
+                                <th>ECAS: in process </th>
+                                <th>ECAS: medical forms</th>
+                                <th>ECAS: medical exams passed</th>
+                                <th>ECAS: medical results received</th>
+                                <th>POVL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for userdata in user_data_objects %}
+                                <tr>
+                                    <td><a href="/user/{{userdata.username}}">{{userdata.username}}</a></td>
+                                    <td>{{userdata.stream}}</td>
+                                    <td>{{userdata.from_short}}</td>
+                                    <td>{{userdata.interview_location}}</td>
+                                    <td>{{userdata.interview_date }}</td>
+                                    <td>{{userdata.invitation_to_apply_date}}</td>
+                                    <td>{{userdata.mpnp_file_date}}</td>
+                                    <td>{{userdata.mpnp_nomination_date}}</td>
+                                    <td>{{userdata.cio_received_date}}</td>
+                                    <td>{{userdata.cio_processing_fee_date}}</td>
+                                    <td>{{userdata.cio_file_number}}</td>
+                                    <td>{{userdata.embassy}}</td>
+                                    <td>{{userdata.ecas_recieved}}</td>
+                                    <td>{{userdata.ecas_in_process}}</td>
+                                    <td>{{userdata.ecas_medical_forms}}</td>
+                                    <td>{{userdata.ecas_medical_exam_passed}}</td>
+                                    <td>{{userdata.ecas_medical_results_received}}</td>
+                                    <td>{{userdata.povl_date}}</td>
+                                </tr>
+                            {% endfor %}
 
-</body>
-</html>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+    </div>
+</div>
+
+{% endblock %}

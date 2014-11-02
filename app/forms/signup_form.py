@@ -2,8 +2,9 @@ __author__ = 'erik'
 from flask_wtf import Form
 from wtforms.fields import StringField, PasswordField, SelectField
 from wtforms.validators import DataRequired
-from app.models.userdata import COUNTRIES
 from pycountry import countries
+
+COUNTRIES = [country.alpha2 for country in countries.objects]
 
 
 def create_countries_dict():
