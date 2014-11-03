@@ -20,7 +20,7 @@ class UserDataDB(dbm.Document):
     cio_received_date = dbm.DateTimeField()
     cio_processing_fee_date = dbm.DateTimeField()
     cio_file_number = dbm.DateTimeField()
-    embassy = dbm.StringField(default='')
+    embassy = dbm.StringField()
     ecas_recieved = dbm.DateTimeField()
     ecas_in_process = dbm.DateTimeField()
     ecas_additional_documents_request1 = dbm.DateTimeField()

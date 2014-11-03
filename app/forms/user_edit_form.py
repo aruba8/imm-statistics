@@ -13,8 +13,8 @@ STREAM_CHOICES = [('general', 'general'), ('family', 'family'), ('strategic', 's
 
 def create_countries_dict():
     country_dict = []
-    for country in COUNTRIES:
-        country_dict.append((country, countries.get(alpha2=country).name))
+    for country_ in COUNTRIES:
+        country_dict.append((country_, countries.get(alpha2=country_).name))
     return country_dict
 
 
