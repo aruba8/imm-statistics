@@ -45,7 +45,8 @@ def signup_page():
             user = User.objects(username=form.login.data).first()
             login_user(user)
             from app.models.userdata import UserDataDB
-            UserDataDB(username=user.username, from_full=countries.get(alpha2=form.country.data).name).save()
+            if len(UserDataDB.objects(username=user.username)) == 0:
+                UserDataDB(username=user.username, from_full=countries.get(alpha2=form.country.data).name).save()
             return redirect(url_for('user.show_user_page', username=user.username))
         else:
             return redirect(url_for('signup_page'))
