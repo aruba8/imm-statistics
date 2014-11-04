@@ -14,8 +14,8 @@ sessions = Sessions()
 from app import app
 
 @lm.user_loader
-def user_loader(login):
-    return User.objects(username=login).first()
+def user_loader(login_):
+    return User.objects(username=login_).first()
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -43,10 +43,9 @@ def signup_page():
                                                                                    form.confirm.data):
         if sessions.new_user(form.login.data, form.password.data):
             user = User.objects(username=form.login.data).first()
-            print user.username
             login_user(user)
             from app.models.userdata import UserDataDB
-            # UserDataDB(username=user.username, from_full=countries.get(alpha2=form.country.data).name).save()
+            UserDataDB(username=user.username, from_full=countries.get(alpha2=form.country.data).name).save()
             return redirect(url_for('user.show_user_page', username=user.username))
         else:
             return redirect(url_for('signup_page'))
