@@ -12,6 +12,7 @@ logger = Logger()
 log = logger.get_logger()
 from app.models.user import User
 from app.models.session import Session as SessionModel
+from app import db
 
 
 class Sessions:
@@ -46,21 +47,18 @@ class Sessions:
 
             # validates the login, returns True if it's a valid user login. false otherwise
 
-    def validate_login(self, username, password, user_record):
-        user = User.objects(username=username).first()
+    def validate_login(self, username, password):
+        user = User.query.filter_by(username=username).first()
         if user is None:
             log.warn("User not in database")
             return False
 
-        salt = user['password'].split(',')[1]
-        if user['password'] != self.make_pw_hash(password, salt):
+        salt = user.password.split(',')[1]
+        if user.password != self.make_pw_hash(password, salt):
             log.warn("user password is not a match")
             return False
 
         # looks good
-
-        for key in user:
-            user_record[key] = user[key]  # perform a copy
 
         return True
 
@@ -120,7 +118,9 @@ class Sessions:
         password_hash = self.make_pw_hash(password)
 
         try:
-            User(username=username, password=password_hash, active=True).save()
+            user = User(username=username, password=password_hash, active=True)
+            db.session.add(user)
+            db.session.commit()
         except:
             log.error("oops, username: " + username + " is already taken")
             return False

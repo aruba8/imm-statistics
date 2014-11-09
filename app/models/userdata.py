@@ -1,37 +1,40 @@
 __author__ = 'erik'
-from app import dbm
+from app import db
 from pycountry import countries
 from datetime import datetime
 
 COUNTRIES = [country.alpha2 for country in countries.objects]
 
 
-class UserDataDB(dbm.Document):
-    username = dbm.StringField(max_length=80, min_length=3, unique=True)
-    stream = dbm.StringField()
-    from_short = dbm.StringField()
-    from_full = dbm.StringField()
-    interview_location = dbm.StringField()
-    interview_date = dbm.DateTimeField()
-    invitation_to_apply_date = dbm.DateTimeField()
-    mpnp_file_date = dbm.DateTimeField()
-    mpnp_request_additional_docs_date = dbm.DateTimeField()
-    mpnp_nomination_date = dbm.DateTimeField()
-    cio_received_date = dbm.DateTimeField()
-    cio_processing_fee_date = dbm.DateTimeField()
-    cio_file_number = dbm.DateTimeField()
-    embassy = dbm.StringField()
-    ecas_recieved = dbm.DateTimeField()
-    ecas_in_process = dbm.DateTimeField()
-    ecas_additional_documents_request1 = dbm.DateTimeField()
-    ecas_medical_forms = dbm.DateTimeField()
-    ecas_medical_exam_passed = dbm.DateTimeField()
-    ecas_medical_results_received = dbm.DateTimeField()
-    ecas_additional_documents_request2 = dbm.DateTimeField()
-    povl_date = dbm.DateTimeField()
+class UserDataDB(db.Model):
+    # __table__ = 'userdatadb'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = (db.Integer)
+    username = db.Column(db.String(length=80), db.ForeignKey('user.username'))
+    stream = db.Column(db.String())
+    from_short =db.Column(db.String())
+    from_full = db.Column(db.String())
+    interview_location = db.Column(db.String())
+    interview_date = db.Column(db.DateTime())
+    invitation_to_apply_date = db.Column(db.DateTime())
+    mpnp_file_date = db.Column(db.DateTime())
+    mpnp_request_additional_docs_date = db.Column(db.DateTime())
+    mpnp_nomination_date = db.Column(db.DateTime())
+    cio_received_date = db.Column(db.DateTime())
+    cio_processing_fee_date = db.Column(db.DateTime())
+    cio_file_number = db.Column(db.DateTime())
+    embassy = db.Column(db.String())
+    ecas_recieved = db.Column(db.DateTime())
+    ecas_in_process = db.Column(db.DateTime())
+    ecas_additional_documents_request1 = db.Column(db.DateTime())
+    ecas_medical_forms = db.Column(db.DateTime())
+    ecas_medical_exam_passed = db.Column(db.DateTime())
+    ecas_medical_results_received = db.Column(db.DateTime())
+    ecas_additional_documents_request2 = db.Column(db.DateTime())
+    povl_date = db.Column(db.DateTime())
 
-    meta = {'collection': 'user_data'}
-
+    def __repr__(self):
+        return '<UserDataDB %r>' % self.username
 
 class UserDataView():
     def __init__(self, user_data_db, date_format='%d/%m/%Y'):

@@ -11,11 +11,11 @@ from app import lm
 
 sessions = Sessions()
 
-from app import app
+from app import app, db
 
 @lm.user_loader
 def user_loader(login_):
-    return User.objects(username=login_).first()
+    return User.query.filter_by(username=login_).first()
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -26,12 +26,13 @@ def login():
 
     if form.validate_on_submit():
         username = form.login.data
-        user = User.objects(username=username).first()
-        if sessions.validate_login(username, form.password.data, {}):
+        user = User.query.filter_by(username=username).first()
+        if sessions.validate_login(username, form.password.data):
             sessions.start_session(username)
             login_user(user)
             flash("Logged in successfully.")
             return redirect(request.args.get('next') or url_for('user.show_user_page', username=username))
+
     return render_template('login.html', form=form)
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -42,11 +43,13 @@ def signup_page():
     if request.method == 'POST' and form.validate() and sessions.validate_new_user(form.login.data, form.password.data,
                                                                                    form.confirm.data):
         if sessions.new_user(form.login.data, form.password.data):
-            user = User.objects(username=form.login.data).first()
+            user = User.query.filter_by(username=form.login.data).first()
             login_user(user)
             from app.models.userdata import UserDataDB
-            if len(UserDataDB.objects(username=user.username)) == 0:
-                UserDataDB(username=user.username, from_full=countries.get(alpha2=form.country.data).name).save()
+            if len(UserDataDB.query.filter_by(username=user.username).all()) == 0:
+                user_data = UserDataDB(username=user.username, from_full=countries.get(alpha2=form.country.data).name)
+                db.session.add(user_data)
+                db.session.commit()
             return redirect(url_for('user.show_user_page', username=user.username))
         else:
             return redirect(url_for('signup_page'))

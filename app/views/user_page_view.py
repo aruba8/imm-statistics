@@ -15,7 +15,7 @@ user_page = Blueprint('user', __name__)
 def show_user_page(username):
     from app.models.userdata import UserDataDB, UserDataView
 
-    userdata = UserDataView(UserDataDB.objects(username=username).first())
+    userdata = UserDataView(UserDataDB.query.filter_by(username=username).first())
     return render_template('user_page.html', userdata=userdata)
 
 
@@ -24,7 +24,7 @@ def show_user_page(username):
 def user_edit_page():
     from app.models.userdata import UserDataDB
 
-    userdata = UserDataDB.objects(username=current_user.username).first()
+    userdata = UserDataDB.query.filter_by(username=current_user.username).first()
     form = UserDataForm(username=userdata.username,
                         stream=userdata.stream,
                         interview_location=userdata.interview_location,
@@ -48,28 +48,31 @@ def user_edit_page():
                         povl_date=userdata.povl_date)
 
     if request.method == 'POST':
-        UserDataDB.objects(username=current_user.username).update(
-            set__from_full=countries.get(alpha2=form.from_full.data).name,
-            set__from_short=form.from_full.data,
-            set__stream=form.stream.data,
-            set__interview_location=form.interview_location.data,
-            set__interview_date=form.interview_date.data,
-            set__invitation_to_apply_date=form.invitation_to_apply_date.data,
-            set__mpnp_file_date=form.mpnp_file_date.data,
-            set__mpnp_request_additional_docs_date=form.mpnp_request_additional_docs_date.data,
-            set__mpnp_nomination_date=form.mpnp_nomination_date.data,
-            set__cio_received_date=form.cio_received_date.data,
-            set__cio_processing_fee_date=form.cio_processing_fee_date.data,
-            set__cio_file_number=form.cio_file_number.data,
-            set__embassy=form.embassy.data,
-            set__ecas_recieved=form.ecas_recieved.data,
-            set__ecas_in_process=form.ecas_in_process.data,
-            set__ecas_additional_documents_request1=form.ecas_additional_documents_request1.data,
-            set__ecas_medical_forms=form.ecas_medical_forms.data,
-            set__ecas_medical_exam_passed=form.ecas_medical_exam_passed.data,
-            set__ecas_medical_results_received=form.ecas_medical_results_received.data,
-            set__ecas_additional_documents_request2=form.ecas_additional_documents_request2.data,
-            set__povl_date=form.povl_date.data)
+        from app import db
+        user_data = UserDataDB.query.filter_by(username=current_user.username).update(dict(
+            from_full=countries.get(alpha2=form.from_full.data).name,
+            from_short=form.from_full.data,
+            stream=form.stream.data,
+            interview_location=form.interview_location.data,
+            interview_date=form.interview_date.data,
+            invitation_to_apply_date=form.invitation_to_apply_date.data,
+            mpnp_file_date=form.mpnp_file_date.data,
+            mpnp_request_additional_docs_date=form.mpnp_request_additional_docs_date.data,
+            mpnp_nomination_date=form.mpnp_nomination_date.data,
+            cio_received_date=form.cio_received_date.data,
+            cio_processing_fee_date=form.cio_processing_fee_date.data,
+            cio_file_number=form.cio_file_number.data,
+            embassy=form.embassy.data,
+            ecas_recieved=form.ecas_recieved.data,
+            ecas_in_process=form.ecas_in_process.data,
+            ecas_additional_documents_request1=form.ecas_additional_documents_request1.data,
+            ecas_medical_forms=form.ecas_medical_forms.data,
+            ecas_medical_exam_passed=form.ecas_medical_exam_passed.data,
+            ecas_medical_results_received=form.ecas_medical_results_received.data,
+            ecas_additional_documents_request2=form.ecas_additional_documents_request2.data,
+            povl_date=form.povl_date.data))
+        print user_data
+        db.session.commit()
         return redirect(url_for('user.show_user_page', username=current_user.username))
     return render_template('user_page_edit.html', userdata=userdata, form=form)
 

@@ -1,11 +1,16 @@
 __author__ = 'erik'
-from app import dbm
+from app import db
+
+ROLE_USER = 0
+ROLE_ADMIN = 1
 
 
-class User(dbm.Document):
-    username = dbm.StringField(max_length=80, min_length=3, unique=True)
-    password = dbm.StringField()
-    active = dbm.BooleanField()
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(length=80), index=True, unique=True)
+    password = db.Column(db.String())
+    role = db.Column(db.SmallInteger, default=ROLE_USER)
+    active = db.Column(db.Boolean())
 
     def is_authenticated(self):
         return True
@@ -27,4 +32,7 @@ class User(dbm.Document):
 
     def __unicode__(self):
         return self.username
+
+    def __repr__(self):
+        return '<User %r>' % self.username
 
