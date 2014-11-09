@@ -1,5 +1,5 @@
 __author__ = 'erik'
-from flask_wtf import Form
+from flask_wtf import Form, RecaptchaField
 from wtforms.fields import StringField, PasswordField, SelectField
 from wtforms.validators import DataRequired
 from pycountry import countries
@@ -19,5 +19,7 @@ class SignUpForm(Form):
     password = PasswordField('Password', validators=[DataRequired()])
     confirm = PasswordField('Confirm')
     country = SelectField(choices=create_countries_dict())
+    recaptcha = RecaptchaField()
+
 
 

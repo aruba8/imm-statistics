@@ -7,7 +7,6 @@ COUNTRIES = [country.alpha2 for country in countries.objects]
 
 
 class UserDataDB(db.Model):
-    # __table__ = 'userdatadb'
     id = db.Column(db.Integer, primary_key=True)
     user_id = (db.Integer)
     username = db.Column(db.String(length=80), db.ForeignKey('user.username'))
@@ -35,6 +34,8 @@ class UserDataDB(db.Model):
 
     def __repr__(self):
         return '<UserDataDB %r>' % self.username
+
+
 
 class UserDataView():
     def __init__(self, user_data_db, date_format='%d/%m/%Y'):

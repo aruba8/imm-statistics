@@ -23,6 +23,9 @@
                     <div class="form-group">
                     {{form.confirm.label}}{{form.confirm(size=30, class_="form-control", placeholder="Confirm password")}}<br>
                     </div>
+                    <div class="form-group">
+                    {{form.recaptcha}}<br>
+                    </div>
                     {% for error in form.errors.login %}
                     <span style="color: red;">[{{error}}]</span>
                     {% endfor %}

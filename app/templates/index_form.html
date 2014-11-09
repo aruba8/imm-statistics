@@ -8,10 +8,39 @@
     <form class="form-inline" role="form" action="/index" method="post">
         <div class="form-group">
             {{filter_form.hidden_tag()}}
-            {{filter_form.embassy.label(class_='')}}
-            {{filter_form.embassy(class_='form-control')}}
+            <div class="row">
+                <div class="col-xs-2">
+                {{filter_form.embassy.label(class_='form-control')}}
+                {{filter_form.embassy(class_='form-control')}}
+                </div>
+                <div class="col-xs-2">
+                {{filter_form.interview_location.label(class_='form-control')}}
+                {{filter_form.interview_location(class_='form-control')}}
+                </div>
+                <!--<div class="form_date">-->
+                    <div class="col-xs-2">
+                    {{filter_form.chooser.label(class_='form-control')}}
+                    {{filter_form.chooser(class_='form-control')}}
+                    </div>
+                    <div class="col-xs-2">
+                    {{filter_form.from_date.label(class_='form-control')}}
+                    {{filter_form.from_date(class_='form-control date')}}
+                    </div>
+                    <div class="col-xs-2">
+                    {{filter_form.to_date.label(class_='form-control')}}
+                    {{filter_form.to_date(class_='form-control date')}}
+                    </div>
+                <!--</div>-->
+                <div class="col-xs-2">
+                <button type="submit" class="btn btn-default form-control pull-right">Filter</button>
+                </div>
+            </div>
         </div>
-        <button type="submit" class="btn btn-default">Filter</button>
     </form></div>
     </div>
 </div>
+<script>
+    $(function(){
+        $('.date').datepicker({ dateFormat: 'yy-mm-dd', changeYear: true, changeMonth: true });
+    });
+</script>

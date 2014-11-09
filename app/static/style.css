@@ -4,8 +4,6 @@
 
 .table {
         max-width: none;
-        /*table-layout: fixed;*/
-       /* word-wrap: break-word;*/
     }
 
 .table-scrollable{
