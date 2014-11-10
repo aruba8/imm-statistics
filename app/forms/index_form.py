@@ -12,8 +12,8 @@ def create_dict(source):
 
 class FilterForm(Form):
     embassy = SelectField('Embassy', choices=create_dict(EMBASSY_CITIES), coerce=str)
-    interview_location = SelectField('Interview place', choices=create_dict(INTERVIEW_CITIES), coerce=str)
-    chooser = SelectField('Which dates to filter', choices=FILTER_CHOICES, coerce=str)
+    interview_location = SelectField('Interview location', choices=create_dict(INTERVIEW_CITIES), coerce=str)
+    chooser = SelectField('Dates to filter', choices=FILTER_CHOICES, coerce=str)
     from_date = StringField()
     to_date = StringField()
 
