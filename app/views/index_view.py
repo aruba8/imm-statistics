@@ -12,6 +12,8 @@ def index():
     if filter_form.validate():
         filter_dict = {}
         filter_state = ''
+        if filter_form.stream.data != '':
+            filter_dict['stream'] = filter_form.stream.data
         if filter_form.embassy.data != '':
             filter_dict['embassy'] = filter_form.embassy.data
         if filter_form.interview_location.data != '':

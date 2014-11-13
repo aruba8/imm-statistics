@@ -4,39 +4,46 @@
                 <h3 class="panel-title">Filter form</h3>
             </div>
     <div class="panel-body">
-
-    <form class="form-inline" role="form" action="/index" method="post">
+    <div class="cont-body">
+    <form class="form-horizontal" role="form" action="/index" method="post">
         <div class="form-group">
-            {{filter_form.hidden_tag()}}
-            <div class="row">
+            <div class="row inbody">
+                {{filter_form.hidden_tag()}}
                 <div class="col-xs-2">
-                {{filter_form.embassy.label(class_='form-control')}}
+                {{filter_form.embassy.label(class_='')}}
                 {{filter_form.embassy(class_='form-control')}}
                 </div>
                 <div class="col-xs-2">
-                {{filter_form.interview_location.label(class_='form-control')}}
+                {{filter_form.stream.label(class_='')}}
+                {{filter_form.stream(class_='form-control')}}
+                </div>
+                <div class="col-xs-2">
+                {{filter_form.interview_location.label(class_='')}}
                 {{filter_form.interview_location(class_='form-control')}}
                 </div>
-                <!--<div class="form_date">-->
-                    <div class="col-xs-2">
-                    {{filter_form.chooser.label(class_='form-control')}}
-                    {{filter_form.chooser(class_='form-control')}}
-                    </div>
-                    <div class="col-xs-2">
-                    {{filter_form.from_date.label(class_='form-control')}}
-                    {{filter_form.from_date(class_='form-control date')}}
-                    </div>
-                    <div class="col-xs-2">
-                    {{filter_form.to_date.label(class_='form-control')}}
-                    {{filter_form.to_date(class_='form-control date')}}
-                    </div>
-                <!--</div>-->
+                <div class="col-xs-2 col-xs-offset-4">
+                    <input type="submit" class="btn btn-default form-control pull-right button" value="Filter">
+                </div>
+            </div>
+
+            <div class="row inbody dates">
                 <div class="col-xs-2">
-                <button type="submit" class="btn btn-default form-control pull-right">Filter</button>
+                {{filter_form.chooser.label(class_='')}}
+                {{filter_form.chooser(class_='form-control')}}
+                </div>
+                <div class="col-xs-2">
+                {{filter_form.from_date.label(class_='')}}
+                {{filter_form.from_date(class_='form-control date')}}
+                </div>
+                <div class="col-xs-2">
+                {{filter_form.to_date.label(class_='')}}
+                {{filter_form.to_date(class_='form-control date')}}
                 </div>
             </div>
         </div>
-    </form></div>
+    </form>
+    </div>
+    </div>
     </div>
 </div>
 <script>

@@ -1,5 +1,6 @@
-.container {
-    /*width: 800px;*/
+.dates {
+    /*border: 1px solid black;*/
+    /*background: red;*/
 }
 
 .table {
@@ -8,4 +9,17 @@
 
 .table-scrollable{
     overflow: auto;
+}
+
+.cont-body {
+    margin-left: 15px;
+    margin-right: 10px;
+}
+
+.inbody{
+    margin-top: 5px;
+}
+
+.inbody input.btn {
+    margin-top: 22px;
 }
