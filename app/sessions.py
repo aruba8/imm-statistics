@@ -69,11 +69,13 @@ class Sessions:
         return hmac.new(self.SECRET, s).hexdigest()
 
     # creates a new user in the database
-    def new_user(self, username, password):
+    def new_user(self, username, email, password):
         password_hash = self.make_pw_hash(password)
 
         try:
-            user = User(username=username, password=password_hash, active=True)
+            print(email)
+            user = User(username=username, email=email, password=password_hash, active=True)
+            print(user)
             db.session.add(user)
             db.session.commit()
         except:

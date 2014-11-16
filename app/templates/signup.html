@@ -12,6 +12,7 @@
                     {{form.hidden_tag()}}
                     <div class="form-group">
                     {{form.login.label}}{{form.login(size=30, class_="form-control", placeholder="Your nickname", autofocus="")}}<br>
+                    {{form.email.label}}{{form.email(size=30, class_="form-control", placeholder="Your email", autofocus="")}}<br>
                     {{form.country.label}}{{form.country(class_="form-control", placeholder="E-mail", autofocus="")}}<br>
                     </div>
                     {% for error in form.errors.login %}

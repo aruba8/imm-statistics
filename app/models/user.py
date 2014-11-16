@@ -1,16 +1,16 @@
 __author__ = 'erik'
 from app import db
-
-ROLE_USER = 0
-ROLE_ADMIN = 1
+from roles import roles_users
 
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(length=80), index=True, unique=True)
+    email = db.Column(db.String(length=80), index=True, unique=True)
     password = db.Column(db.String())
-    role = db.Column(db.SmallInteger, default=ROLE_USER)
     active = db.Column(db.Boolean())
+    roles = db.relationship('Role', secondary=roles_users,
+                            backref=db.backref('users', lazy='dynamic'))
 
     def is_authenticated(self):
         return True

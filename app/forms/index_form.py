@@ -16,16 +16,14 @@ def create_dict(source):
             list_.append((item[0], item[0]))
     return list_
 
-embassy_cities = UserDataDB.query.with_entities(UserDataDB.embassy).distinct().order_by('embassy asc')
-interview_cities = UserDataDB.query.with_entities(UserDataDB.interview_location).distinct().order_by('interview_location asc')
-streams = UserDataDB.query.with_entities(UserDataDB.stream).distinct().order_by('stream asc')
-
-
-
 class FilterForm(Form):
-    embassy = SelectField('Embassy', choices=create_dict(embassy_cities), coerce=str)
-    stream = SelectField('Stream', choices=create_dict(streams), coerce=str)
-    interview_location = SelectField('Interview location', choices=create_dict(interview_cities), coerce=str)
+    __embassy_cities = UserDataDB.query.with_entities(UserDataDB.embassy).distinct().order_by('embassy asc')
+    __interview_cities = UserDataDB.query.with_entities(UserDataDB.interview_location).distinct().order_by('interview_location asc')
+    __streams = UserDataDB.query.with_entities(UserDataDB.stream).distinct().order_by('stream asc')
+
+    embassy = SelectField('Embassy', choices=create_dict(__embassy_cities), coerce=str)
+    stream = SelectField('Stream', choices=create_dict(__streams), coerce=str)
+    interview_location = SelectField('Interview location', choices=create_dict(__interview_cities), coerce=str)
     chooser = SelectField('Dates to filter', choices=FILTER_CHOICES, coerce=str)
     from_date = StringField()
     to_date = StringField()

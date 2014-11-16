@@ -1,6 +1,6 @@
 __author__ = 'erik'
 
-from flask import render_template, flash, redirect, request, url_for, g
+from flask import render_template, flash, redirect, request, url_for, g, current_app, session
 from flask_login import login_user, logout_user, login_required
 from pycountry import countries
 from app.forms.login_form import LoginForm
@@ -8,14 +8,15 @@ from app.forms.signup_form import SignUpForm
 from app.models.user import User
 from app.sessions import Sessions
 from app import lm
+from flask_principal import Identity, identity_changed, AnonymousIdentity
 
 sessions = Sessions()
 
 from app import app, db
 
 @lm.user_loader
-def user_loader(login_):
-    return User.query.filter_by(username=login_).first()
+def user_loader(username):
+    return User.query.filter_by(username=username).first()
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -31,6 +32,8 @@ def login():
             sessions.start_session(username)
             login_user(user)
             flash("Logged in successfully.")
+            # Tell Flask-Principal the identity changed
+            identity_changed.send(current_app._get_current_object(), identity=Identity(user.id))
             return redirect(request.args.get('next') or url_for('user.show_user_page', username=username))
 
     return render_template('login.html', form=form)
@@ -42,7 +45,7 @@ def signup_page():
         return render_template('signup.html', form=form)
     if request.method == 'POST' and form.validate() and sessions.validate_new_user(form.login.data, form.password.data,
                                                                                    form.confirm.data):
-        if sessions.new_user(form.login.data, form.password.data):
+        if sessions.new_user(form.login.data, form.email.data, form.password.data):
             user = User.query.filter_by(username=form.login.data).first()
             login_user(user)
             from app.models.userdata import UserDataDB
@@ -61,5 +64,13 @@ def signup_page():
 def logout():
     # Remove the user information from the session
     logout_user()
+    # Remove session keys set by Flask-Principal
+    for key in ('identity.name', 'identity.auth_type'):
+        session.pop(key, None)
+
+    # Tell Flask-Principal the user is anonymous
+    identity_changed.send(current_app._get_current_object(), identity=AnonymousIdentity())
+
+
     return redirect(request.args.get('next') or '/index')
 

@@ -1,13 +1,13 @@
 __author__ = 'erik'
 
 from flask import render_template, request
-from app import app
+from app import app, admin_permission
 from app.models.userdata import UserDataDB, UserDataView
-from app.forms.index_form import FilterForm
 
 @app.route('/')
 @app.route('/index', methods=['GET', 'POST'])
 def index():
+    from app.forms.index_form import FilterForm
     filter_form = FilterForm(csrf_enabled=False)
     if filter_form.validate():
         filter_dict = {}
