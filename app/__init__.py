@@ -32,10 +32,11 @@ from app.models.userdata import UserDataDB
 from app.models.roles import Role
 
 
-from app.views.admin_view import UserSettingsView, RoleSettingsView
+from app.views.admin_view import UserSettingsView, RoleSettingsView, UserDataSettingsView
 
 admin = Admin(app, name='Admin', base_template='my_admin.html')
 admin.add_view(UserSettingsView(db.session))
 admin.add_view(RoleSettingsView(db.session))
+admin.add_view(UserDataSettingsView(db.session))
 
 

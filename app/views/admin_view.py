@@ -3,6 +3,7 @@ from flask_admin.contrib.sqla import ModelView
 from flask_login import current_user
 from app.models.user import User
 from app.models.roles import Role
+from app.models.userdata import UserDataDB
 
 
 class UserSettingsView(ModelView):
@@ -19,7 +20,7 @@ class UserSettingsView(ModelView):
     def is_accessible(self):
         if hasattr(current_user, 'roles'):
             roles = [role.name for role in current_user.roles]
-            if roles.__contains__('admin'):
+            if 'admin' in roles:
                 return True
         return False
 
@@ -36,5 +37,24 @@ class RoleSettingsView(ModelView):
         if hasattr(current_user, 'roles'):
             roles = [role.name for role in current_user.roles]
             if 'super_admin' in roles:
+                return True
+        return False
+
+
+class UserDataSettingsView(ModelView):
+    # Disable model creation
+    can_create = False
+    column_searchable_list = ['username']
+    # form_excluded_columns = ('roles')
+    column_list = ('username', 'stream', 'from_short')
+
+    def __init__(self, session):
+        # Just call parent class with predefined model.
+        super(UserDataSettingsView, self).__init__(UserDataDB, session, name='UserData')
+
+    def is_accessible(self):
+        if hasattr(current_user, 'roles'):
+            roles = [role.name for role in current_user.roles]
+            if 'admin' in roles:
                 return True
         return False
