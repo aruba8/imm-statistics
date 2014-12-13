@@ -39,6 +39,7 @@ class UserDataDB(db.Model):
 
 class UserDataView():
     def __init__(self, user_data_db, date_format='%d/%m/%Y'):
+        self.user_id = self.__set_field(user_data_db.id)
         self.date_format = date_format
         self.username = self.__set_field(user_data_db.username)
         self.stream = self.__set_field(user_data_db.stream)

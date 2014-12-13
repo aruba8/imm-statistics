@@ -11,11 +11,11 @@ logger = log.get_logger()
 user_page = Blueprint('user', __name__)
 
 
-@user_page.route('/user/<username>')
-def show_user_page(username):
+@user_page.route('/user/<id>')
+def show_user_page(id):
     from app.models.userdata import UserDataDB, UserDataView
 
-    userdata = UserDataView(UserDataDB.query.filter_by(username=username).first())
+    userdata = UserDataView(UserDataDB.query.get(id))
     return render_template('user_page.html', userdata=userdata)
 
 
@@ -49,7 +49,8 @@ def user_edit_page():
 
     if request.method == 'POST':
         from app import db
-        user_data = UserDataDB.query.filter_by(username=current_user.username).update(dict(
+        user_data = UserDataDB.query.filter_by(username=current_user.username)
+        user_data.update(dict(
             from_full=countries.get(alpha2=form.from_full.data).name,
             from_short=form.from_full.data,
             stream=form.stream.data,
@@ -71,8 +72,7 @@ def user_edit_page():
             ecas_medical_results_received=form.ecas_medical_results_received.data,
             ecas_additional_documents_request2=form.ecas_additional_documents_request2.data,
             povl_date=form.povl_date.data))
-        print user_data
         db.session.commit()
-        return redirect(url_for('user.show_user_page', username=current_user.username))
+        return redirect(url_for('user.show_user_page', id=user_data.first().id))
     return render_template('user_page_edit.html', userdata=userdata, form=form)
 

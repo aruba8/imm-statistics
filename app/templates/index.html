@@ -34,7 +34,7 @@
                         <tbody>
                             {% for userdata in user_data_objects %}
                                 <tr>
-                                    <td><a href="/user/{{userdata.username}}">{{userdata.username}}</a></td>
+                                    <td><a href="/user/{{userdata.user_id}}">{{userdata.username}}</a></td>
                                     <td>{{userdata.stream}}</td>
                                     <td>{{userdata.from_short}}</td>
                                     <td>{{userdata.interview_location}}</td>

@@ -1,3 +1,5 @@
+from app.models.userdata import UserDataDB
+
 __author__ = 'erik'
 
 from flask import render_template, flash, redirect, request, url_for, g, current_app, session
@@ -31,10 +33,11 @@ def login():
         if sessions.validate_login(username, form.password.data):
             sessions.start_session(username)
             login_user(user)
+            userdata = UserDataDB.query.filter_by(username=user.username).first()
             flash("Logged in successfully.")
             # Tell Flask-Principal the identity changed
             identity_changed.send(current_app._get_current_object(), identity=Identity(user.id))
-            return redirect(request.args.get('next') or url_for('user.show_user_page', username=username))
+            return redirect(request.args.get('next') or url_for('user.show_user_page', id=userdata.id))
 
     return render_template('login.html', form=form)
 
