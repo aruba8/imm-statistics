@@ -34,11 +34,11 @@ def index():
 
         user_data_objects = UserDataDB.query.filter(filter_state).filter_by(**filter_dict).order_by(UserDataDB.mpnp_file_date)
         users = [UserDataView(user) for user in user_data_objects]
-        return render_template("index.html", user_data_objects=users, filter_form=filter_form)
+        return render_template("index.jinja2.html", user_data_objects=users, filter_form=filter_form)
     else:
         user_data_objects = UserDataDB.query.order_by(UserDataDB.mpnp_file_date)
         users = [UserDataView(user) for user in user_data_objects]
-        return render_template("index.html", user_data_objects=users, filter_form=filter_form)
+        return render_template("index.jinja2.html", user_data_objects=users, filter_form=filter_form)
 
 
 

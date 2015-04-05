@@ -16,7 +16,7 @@ def show_user_page(id):
     from app.models.userdata import UserDataDB, UserDataView
 
     userdata = UserDataView(UserDataDB.query.get(id))
-    return render_template('user_page.html', userdata=userdata)
+    return render_template('user_page.jinja2.html', userdata=userdata)
 
 
 @user_page.route('/user/edit', methods=['GET', 'POST'])
@@ -74,5 +74,5 @@ def user_edit_page():
             povl_date=form.povl_date.data))
         db.session.commit()
         return redirect(url_for('user.show_user_page', id=user_data.first().id))
-    return render_template('user_page_edit.html', userdata=userdata, form=form)
+    return render_template('user_page_edit.jinja2.html', userdata=userdata, form=form)
 

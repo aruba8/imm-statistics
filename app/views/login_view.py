@@ -39,13 +39,13 @@ def login():
             identity_changed.send(current_app._get_current_object(), identity=Identity(user.id))
             return redirect(request.args.get('next') or url_for('user.show_user_page', id=userdata.id))
 
-    return render_template('login.html', form=form)
+    return render_template('login.jinja2.html', form=form)
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup_page():
     form = SignUpForm()
     if request.method == 'GET':
-        return render_template('signup.html', form=form)
+        return render_template('signup.jinja2.html', form=form)
     if request.method == 'POST' and form.validate() and sessions.validate_new_user(form.login.data, form.password.data,
                                                                                    form.confirm.data):
         if sessions.new_user(form.login.data, form.email.data, form.password.data):
