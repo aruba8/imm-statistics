@@ -48,17 +48,20 @@ def signup_page():
         return render_template('signup.jinja2.html', form=form)
     if request.method == 'POST' and form.validate() and sessions.validate_new_user(form.login.data, form.password.data,
                                                                                    form.confirm.data):
-        if sessions.new_user(form.login.data, form.email.data, form.password.data):
+        user_data = UserDataDB.query.filter_by(username=form.login.data)
+        if len(user_data.all()) == 0:
+            sessions.new_user(form.login.data, form.email.data, form.password.data)
             user = User.query.filter_by(username=form.login.data).first()
             login_user(user)
-            from app.models.userdata import UserDataDB
-            if len(UserDataDB.query.filter_by(username=user.username).all()) == 0:
-                user_data = UserDataDB(username=user.username, from_full=countries.get(alpha2=form.country.data).name)
-                db.session.add(user_data)
-                db.session.commit()
-            return redirect(url_for('user.show_user_page', username=user.username))
+            user_data = UserDataDB(username=user.username, from_full=countries.get(alpha2=form.country.data).name)
+            db.session.add(user_data)
+            db.session.commit()
+            return redirect(url_for('user.show_user_page', id=user.id))
         else:
-            return redirect(url_for('signup_page'))
+            sessions.new_user(form.login.data, form.email.data, form.password.data, _id=user_data.first().id)
+            user = User.query.filter_by(username=form.login.data).first()
+            login_user(user)
+            return redirect(url_for('user.show_user_page', id=user.id))
     else:
         return redirect(url_for('signup_page'))
 

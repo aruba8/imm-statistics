@@ -69,19 +69,21 @@ class Sessions:
         return hmac.new(self.SECRET, s).hexdigest()
 
     # creates a new user in the database
-    def new_user(self, username, email, password):
+    def new_user(self, username, email, password, _id=None):
         password_hash = self.make_pw_hash(password)
 
         try:
-            print(email)
             user = User(username=username, email=email, password=password_hash, active=True)
-            print(user)
+            if _id is not None:
+                user.id = _id
             db.session.add(user)
             db.session.commit()
-        except:
+        except Exception as e:
             log.error("oops, username: " + username + " is already taken")
+            log.error(e)
             return False
         return True
+
 
     def validate_new_user(self, username, password, confirm):
         if username is None or username == '':

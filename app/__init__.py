@@ -26,11 +26,6 @@ manager = Manager(app)
 manager.add_command('db', MigrateCommand)
 
 from views import views
-from app.models.user import User
-from app.models.session import Session
-from app.models.userdata import UserDataDB
-from app.models.roles import Role
-
 
 from app.views.admin_view import UserSettingsView, RoleSettingsView, UserDataSettingsView
 
