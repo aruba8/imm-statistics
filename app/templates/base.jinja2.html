@@ -29,7 +29,10 @@
                     <i class="icon-user"></i> {{ current_user.username }} <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="/user/{{ current_user.id }}">Profile</a></li>
+                    <li><a href="/user/{{ g.user.id }}">Profile</a></li>
+                    {% if g.user.get_admin_role_name() == 'admin' %}
+                        <li><a href="/admin">admin</a></li>
+                    {% endif %}
                     <li><a href="{{ url_for('logout') }}">Log out</a></li>
                 </ul>
             </div>

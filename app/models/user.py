@@ -12,6 +12,13 @@ class User(db.Model):
     roles = db.relationship('Role', secondary=roles_users,
                             backref=db.backref('users', lazy='dynamic'))
 
+    def get_admin_role_name(self):
+        if self.roles:
+            for role in self.roles:
+                if role.name == 'admin':
+                    return role.name
+        return ''
+
     def is_authenticated(self):
         return True
 
