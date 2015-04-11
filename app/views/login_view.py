@@ -63,7 +63,7 @@ def signup_page():
             login_user(user)
             return redirect(url_for('user.show_user_page', id=user.id))
     else:
-        return redirect(url_for('signup_page'))
+        return render_template('signup.jinja2.html', form=form)
 
 @app.route('/logout')
 @login_required

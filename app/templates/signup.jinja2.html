@@ -11,27 +11,24 @@
                 <fieldset>
                     {{form.hidden_tag()}}
                     <div class="form-group">
+                    <span style="color: red;">{{form.errors.login|first}}</span>
                     {{form.login.label}}{{form.login(size=30, class_="form-control", placeholder="Your nickname", autofocus="")}}<br>
+                    <span style="color: red;">{{form.errors.email|first}}</span>
                     {{form.email.label}}{{form.email(size=30, class_="form-control", placeholder="Your email", autofocus="")}}<br>
                     {{form.country.label}}{{form.country(class_="form-control", placeholder="E-mail", autofocus="")}}<br>
                     </div>
-                    {% for error in form.errors.login %}
-                    <span style="color: red;">[{{error}}]</span>
-                    {% endfor %}
+                    <span style="color: red;">{{form.errors.password|first}}</span>
                     <div class="form-group">
                     {{form.password.label}}{{form.password(size=30, class_="form-control", placeholder="Password")}}<br>
                     </div>
                     <div class="form-group">
                     {{form.confirm.label}}{{form.confirm(size=30, class_="form-control", placeholder="Confirm password")}}<br>
                     </div>
-                {% if config.RECAPTCHA %}
+
                     <div class="form-group">
+                    <span style="color: red;">{{form.errors.recaptcha|first}}</span>
                     {{form.recaptcha}}<br>
                     </div>
-                {% endif %}
-                    {% for error in form.errors.login %}
-                    <span style="color: red;">[{{error}}]</span>
-                    {% endfor %}
                     <br>
                     <input class="btn btn-sm btn-success" type="submit" name="submit" value="Sign Up">
                 </fieldset>

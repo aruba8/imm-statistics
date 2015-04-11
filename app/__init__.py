@@ -11,6 +11,7 @@ from flask_admin import Admin
 app = Flask(__name__, static_folder='static')
 app.config.from_object('config')
 app.register_blueprint(user_page)
+app.testing = False
 
 principal = Principal(app)
 admin_permission = Permission(RoleNeed('admin'))
