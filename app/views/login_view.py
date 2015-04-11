@@ -1,3 +1,4 @@
+from app.forms.forgot_form import Forgot
 from app.models.userdata import UserDataDB
 
 __author__ = 'erik'
@@ -80,3 +81,13 @@ def logout():
 
     return redirect(request.args.get('next') or '/index')
 
+@app.route('/forgot', methods=['GET', 'POST'])
+def forgot():
+    form = Forgot()
+    if form.validate_on_submit():
+        email = form.email.data
+        print email
+
+
+
+    return render_template('forgot.jinja2.html', form=form)

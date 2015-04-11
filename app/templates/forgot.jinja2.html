@@ -1,0 +1,26 @@
+{% extends "base.jinja2.html" %}
+
+{% block content %}
+        {% if not g.user.is_authenticated()%}
+            <div class="col-md-4">
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Recover your password</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form role="form" method="post" action="/forgot">
+                            <fieldset>
+                                <div class="form-group">
+                                <span style="color: red;">{{form.errors.email|first}}</span>
+                                    {{form.hidden_tag()}}
+                                    {{form.email(size=30, class_="form-control", placeholder="Your email", autofocus="")}}
+                                </div>
+                                <input class="btn btn-sm btn-success" type="submit" value="Restore">
+                                <a class="btn btn-sm btn-danger" href="/login">back</a>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+{% endblock %}
