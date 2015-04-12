@@ -53,7 +53,7 @@ def user_edit_page():
     form = UserDataForm(username=userdata.username,
                         stream=userdata.stream,
                         interview_location=userdata.interview_location,
-                        from_full=userdata.from_full,
+                        from_full=userdata.from_short,
                         interview_date=userdata.interview_date,
                         invitation_to_apply_date=userdata.invitation_to_apply_date,
                         mpnp_file_date=userdata.mpnp_file_date,
