@@ -1,10 +1,17 @@
 __author__ = 'erik'
 from flask_admin.contrib.sqla import ModelView
+from flask_admin import BaseView
+import flask_admin
 from flask_login import current_user
 from app.models.user import User
 from app.models.roles import Role
 from app.models.userdata import UserDataDB
 
+
+class MyAdminView(BaseView):
+    @flask_admin.expose("/")
+    def index(self):
+        return self.render('index.html')
 
 class UserSettingsView(ModelView):
     # Disable model creation

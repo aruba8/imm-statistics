@@ -1,22 +1,47 @@
+
 __author__ = 'erik'
 
-from flask import Blueprint, render_template, redirect, url_for, request
+from flask import Blueprint, render_template, redirect, url_for, request, g
 from flask_login import login_required, current_user
 from app.utils.logger import Logger
 from app.forms.user_edit_form import UserDataForm
 from pycountry import countries
+from datetime import datetime, timedelta
 
 log = Logger()
 logger = log.get_logger()
 user_page = Blueprint('user', __name__)
 
+@user_page.route('/user/req_confirm/<_id>')
+@login_required
+def confirm(_id):
+    if g.user.id == int(_id):
+        from app.models.email import EmailConfirmation
+        from app.sessions import Sessions
+        email_conf_pre = EmailConfirmation.query.filter_by(user_id=_id).first()
+        session = Sessions()
+        current_time = datetime.now()
+        expiration_date = current_time + timedelta(days=7)
+        hash_c = session.make_hash_c(g.user.email)
+        email_conf = EmailConfirmation(user_id=_id, requested_time=current_time,
+                                       hash_c=hash_c, expiration_date=expiration_date)
+        if email_conf_pre:
+            session.update_email_conf(email_conf_pre, email_conf)
+        else:
+            session.save_email_conf(email_conf)
 
-@user_page.route('/user/<id>')
-def show_user_page(id):
+    return redirect(url_for('user.show_user_page', _id=_id))
+
+
+@user_page.route('/user/<_id>')
+def show_user_page(_id):
     from app.models.userdata import UserDataDB, UserDataView
-
-    userdata = UserDataView(UserDataDB.query.get(id))
-    return render_template('user_page.jinja2.html', userdata=userdata)
+    from app.models.email import EmailConfirmation
+    email_conf = None
+    if g.user.is_authenticated():
+        email_conf = EmailConfirmation.query.filter_by(user_id=g.user.id).first()
+    userdata = UserDataView(UserDataDB.query.get(_id))
+    return render_template('user_page.jinja2.html', userdata=userdata, email_conf=email_conf)
 
 
 @user_page.route('/user/edit', methods=['GET', 'POST'])
@@ -28,7 +53,7 @@ def user_edit_page():
     form = UserDataForm(username=userdata.username,
                         stream=userdata.stream,
                         interview_location=userdata.interview_location,
-                        from_full=userdata.from_short,
+                        from_full=userdata.from_full,
                         interview_date=userdata.interview_date,
                         invitation_to_apply_date=userdata.invitation_to_apply_date,
                         mpnp_file_date=userdata.mpnp_file_date,
@@ -73,6 +98,6 @@ def user_edit_page():
             ecas_additional_documents_request2=form.ecas_additional_documents_request2.data,
             povl_date=form.povl_date.data))
         db.session.commit()
-        return redirect(url_for('user.show_user_page', id=user_data.first().id))
+        return redirect(url_for('user.show_user_page', _id=user_data.first().id))
     return render_template('user_page_edit.jinja2.html', userdata=userdata, form=form)
 

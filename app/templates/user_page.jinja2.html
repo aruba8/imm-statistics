@@ -1,6 +1,14 @@
 {% extends "base.jinja2.html" %}
 
 {% block content %}
+    {% if current_user.is_authenticated() %}
+        {% if not email_conf %}
+            <div class="alert alert-warning" role="alert">Your email address have not confirmed. Please <a href="/user/req_confirm/{{ g.user.id }}" class="alert-link">confirm</a> it to be able to recover you password</div>
+        {% else %}
+            <div class="alert alert-warning" role="alert">Your confirmation link sent but still not activated. <a href="/user/req_confirm/{{ g.user.id }}" class="alert-link">Resend</a> it?</div>
+        {% endif %}
+    {% endif %}
+
 <table class="table table-condensed table-hover">
     <tbody>
     <tr><td>Nickname :</td><td> {{ userdata.username }}</td></tr>

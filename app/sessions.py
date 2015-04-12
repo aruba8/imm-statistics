@@ -91,3 +91,19 @@ class Sessions:
         if password != confirm:
             return False
         return True
+
+    def make_hash_c(self, email):
+        salt = self.make_salt()
+        return hashlib.sha256(email + salt).hexdigest()
+
+    def save_email_conf(self, email_conf):
+        db.session.add(email_conf)
+        db.session.commit()
+
+    def update_email_conf(self, email_conf_pre, email_conf):
+        email_conf_pre.hash_c = email_conf.hash_c
+        email_conf_pre.requested_time = email_conf.requested_time
+        email_conf_pre.expiration_date = email_conf.expiration_date
+        db.session.add(email_conf_pre)
+        db.session.commit()
+

@@ -30,7 +30,7 @@ from views import views
 
 from app.views.admin_view import UserSettingsView, RoleSettingsView, UserDataSettingsView
 
-admin = Admin(app, name='Admin', base_template='my_admin.jinja2.html')
+admin = Admin(app, name='Admin', base_template='admin/my_admin.jinja2.html')
 admin.add_view(UserSettingsView(db.session))
 admin.add_view(RoleSettingsView(db.session))
 admin.add_view(UserDataSettingsView(db.session))

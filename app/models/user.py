@@ -9,6 +9,7 @@ class User(db.Model):
     email = db.Column(db.String(length=80), index=True, unique=True)
     password = db.Column(db.String())
     active = db.Column(db.Boolean())
+    email_activated = db.Column(db.Boolean())
     roles = db.relationship('Role', secondary=roles_users,
                             backref=db.backref('users', lazy='dynamic'))
 

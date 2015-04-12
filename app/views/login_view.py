@@ -38,7 +38,7 @@ def login():
             flash("Logged in successfully.")
             # Tell Flask-Principal the identity changed
             identity_changed.send(current_app._get_current_object(), identity=Identity(user.id))
-            return redirect(request.args.get('next') or url_for('user.show_user_page', id=userdata.id))
+            return redirect(request.args.get('next') or url_for('user.show_user_page', _id=userdata.id))
 
     return render_template('login.jinja2.html', form=form)
 
@@ -51,19 +51,18 @@ def signup_page():
                                                                                    form.confirm.data):
         user_data = UserDataDB.query.filter_by(username=form.login.data)
         if len(user_data.all()) == 0:
+            sessions.new_user(form.login.data, form.email.data, form.password.data)
             user_data = UserDataDB(username=form.login.data, from_full=countries.get(alpha2=form.country.data).name)
             db.session.add(user_data)
             db.session.commit()
-            user_data = UserDataDB.query.filter_by(username=form.login.data).first()
-            sessions.new_user(form.login.data, form.email.data, form.password.data, _id=user_data.id)
             user = User.query.filter_by(username=form.login.data).first()
             login_user(user)
-            return redirect(url_for('user.show_user_page', id=user.id))
+            return redirect(url_for('user.show_user_page', _id=user.id))
         else:
             sessions.new_user(form.login.data, form.email.data, form.password.data, _id=user_data.first().id)
             user = User.query.filter_by(username=form.login.data).first()
             login_user(user)
-            return redirect(url_for('user.show_user_page', id=user.id))
+            return redirect(url_for('user.show_user_page', _id=user.id))
     else:
         return render_template('signup.jinja2.html', form=form)
 
