@@ -7,15 +7,18 @@ from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from flask_principal import Principal, Permission, RoleNeed
 from flask_admin import Admin
+from flask_mail import Mail
 
 app = Flask(__name__, static_folder='static')
 app.config.from_object('config')
 app.register_blueprint(user_page)
 app.testing = False
+app.debug = False
 
 principal = Principal(app)
 admin_permission = Permission(RoleNeed('admin'))
 
+mail = Mail(app)
 
 lm = LoginManager()
 lm.init_app(app)

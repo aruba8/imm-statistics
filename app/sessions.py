@@ -4,7 +4,7 @@ import hmac
 import random
 import string
 import hashlib
-
+from config import SECRET_KEY
 from utils.logger import Logger
 
 logger = Logger()
@@ -63,7 +63,7 @@ class Sessions:
     def make_secure_val(self, s):
         return "%s|%s" % (s, self.hash_str(s))
 
-    SECRET = 'VerySecret'
+    SECRET = SECRET_KEY
 
     def hash_str(self, s):
         return hmac.new(self.SECRET, s).hexdigest()
@@ -96,8 +96,8 @@ class Sessions:
         salt = self.make_salt()
         return hashlib.sha256(email + salt).hexdigest()
 
-    def save_email_conf(self, email_conf):
-        db.session.add(email_conf)
+    def save(self, model):
+        db.session.add(model)
         db.session.commit()
 
     def update_email_conf(self, email_conf_pre, email_conf):

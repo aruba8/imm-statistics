@@ -7,7 +7,7 @@ from flask_principal import identity_loaded, UserNeed, RoleNeed
 from app import app
 import index_view
 import login_view
-
+import confirm_view
 @app.before_request
 def before_request():
     g.user = current_user

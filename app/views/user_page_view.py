@@ -27,8 +27,12 @@ def confirm(_id):
                                        hash_c=hash_c, expiration_date=expiration_date)
         if email_conf_pre:
             session.update_email_conf(email_conf_pre, email_conf)
+            from app.utils.mailer import send_confirm_email
+            send_confirm_email(email_conf, g.user)
         else:
-            session.save_email_conf(email_conf)
+            session.save(email_conf)
+            from app.utils.mailer import send_confirm_email
+            send_confirm_email(email_conf, g.user)
 
     return redirect(url_for('user.show_user_page', _id=_id))
 
