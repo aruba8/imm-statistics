@@ -31,22 +31,21 @@ class SignUpForm(Form):
     def validate(self):
         rv = Form.validate(self)
 
-        user = User.query.filter_by(username=self.login.data).first()
-        email = User.query.filter_by(email=self.email.data).first()
+        user_by_username = User.query.filter_by(username=self.login.data).first()
+        user_by_email = User.query.filter_by(email=self.email.data).first()
 
-        if user is not None:
+        if user_by_username is not None:
             self.login.errors.append('This username has already taken')
             return False
 
-        if email is not None:
+        if user_by_email is not None:
             self.email.errors.append('This email is using for another account')
-
-
+            return False
 
         if not rv:
             return False
 
-        self.user = user
+        self.user = user_by_username
         return True
 
 

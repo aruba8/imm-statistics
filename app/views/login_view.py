@@ -51,14 +51,14 @@ def signup_page():
                                                                                    form.confirm.data):
         user_data = UserDataDB.query.filter_by(username=form.login.data)
         if len(user_data.all()) == 0:
-            sessions.new_user(form.login.data, form.email.data, form.password.data)
-            user_data = UserDataDB(username=form.login.data, from_full=countries.get(alpha2=form.country.data).name,
-                                   from_short=form.country.data)
-            db.session.add(user_data)
-            db.session.commit()
-            user = User.query.filter_by(username=form.login.data).first()
-            login_user(user)
-            return redirect(url_for('user.show_user_page', _id=user.id))
+            if sessions.new_user(form.login.data, form.email.data, form.password.data):
+                user_data = UserDataDB(username=form.login.data, from_full=countries.get(alpha2=form.country.data).name,
+                                       from_short=form.country.data)
+                db.session.add(user_data)
+                db.session.commit()
+                user = User.query.filter_by(username=form.login.data).first()
+                login_user(user)
+                return redirect(url_for('user.show_user_page', _id=user.id))
         else:
             sessions.new_user(form.login.data, form.email.data, form.password.data, _id=user_data.first().id)
             user = User.query.filter_by(username=form.login.data).first()

@@ -1,3 +1,5 @@
+from sqlalchemy.exc import IntegrityError
+
 __author__ = 'erik'
 
 import hmac
@@ -78,7 +80,7 @@ class Sessions:
                 user.id = _id
             db.session.add(user)
             db.session.commit()
-        except Exception as e:
+        except IntegrityError as e:
             log.error("oops, username: " + username + " is already taken")
             log.error(e)
             return False
