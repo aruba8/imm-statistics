@@ -5,3 +5,4 @@
 config.ini
 *.log
 test.py
+#config.py

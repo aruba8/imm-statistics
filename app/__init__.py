@@ -2,18 +2,18 @@ __author__ = 'erik'
 from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
-from app.views.user_page_view import user_page
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from flask_principal import Principal, Permission, RoleNeed
 from flask_admin import Admin
 from flask_mail import Mail
 
+from app.views.user_page_view import user_page
+
+
 app = Flask(__name__, static_folder='static')
 app.config.from_object('config')
 app.register_blueprint(user_page)
-app.testing = False
-app.debug = False
 
 principal = Principal(app)
 admin_permission = Permission(RoleNeed('admin'))

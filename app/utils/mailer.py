@@ -1,8 +1,10 @@
-from app.decorators import async
 from flask_mail import Message
 from flask import render_template
+
+from app.decorators import async
 from app import app
 from config import MAIL_USERNAME
+
 
 __author__ = 'erik'
 from app import mail
@@ -15,7 +17,7 @@ def send_async_email(msg):
 
 
 def send_email(subject, recipients, text_body, html_body):
-    msg = Message(subject, sender=("Me", message_sender), recipients=recipients)
+    msg = Message(subject, sender=("admin", message_sender), recipients=recipients)
     msg.body = text_body
     msg.html = html_body
     send_async_email(msg)

@@ -4,6 +4,9 @@ import os
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
+DEBUG = False
+TESTING = False
+
 CSRF_ENABLED = True
 SECRET_KEY = 'you-will-never-guess'
 SQLALCHEMY_DATABASE_URI = 'postgresql://imm:imm@localhost:5432/imm_db'
@@ -17,5 +20,5 @@ MAIL_PORT = 465
 MAIL_USE_SSL = True
 MAIL_USE_TLS = False
 MAIL_USERNAME = 'biomaks@gmail.com'
-MAIL_PASSWORD = 'jOw2Cup2Keaj4U'
+MAIL_PASSWORD = 'xxxxxx'
 SERVER_NAME = 'localhost:5000'

@@ -1,15 +1,18 @@
 __author__ = 'erik'
-from app import db
 from pycountry import countries
 from datetime import datetime
+
+from app import db
+
 
 COUNTRIES = [country.alpha2 for country in countries.objects]
 
 
 class UserDataDB(db.Model):
+    __tablename__ = 'userdata'
     id = db.Column(db.Integer, primary_key=True)
-    user_id = (db.Integer)
-    username = db.Column(db.String(length=80), db.ForeignKey('user.username'))
+    user_id = db.Integer
+    username = db.Column(db.String(length=80))
     stream = db.Column(db.String(collation='NOCASE'))
     from_short =db.Column(db.String())
     from_full = db.Column(db.String())
