@@ -12,7 +12,7 @@ SECRET_KEY = 'you-will-never-guess'
 SQLALCHEMY_DATABASE_URI = 'postgresql://imm:imm@localhost:5432/imm_db'
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 RECAPTCHA_PUBLIC_KEY = '6LcRbv0SAAAAAKiwXd5lGAQrEvvMlVJ6xC1ZZyRl'
-RECAPTCHA_PRIVATE_KEY = '6LcRbv0SAAAAAC9kGGqVNGHfVV-ErpbwkvhwsUsQ'
+RECAPTCHA_PRIVATE_KEY = 'xxxxxxxxxxxxx'
 RECAPTCHA_OPTIONS = {'theme': 'white'}
 
 MAIL_SERVER = 'smtp.googlemail.com'
@@ -20,5 +20,5 @@ MAIL_PORT = 465
 MAIL_USE_SSL = True
 MAIL_USE_TLS = False
 MAIL_USERNAME = 'biomaks@gmail.com'
-MAIL_PASSWORD = 'Rob3tUrm2iL1Righ6it3Hog4'
+MAIL_PASSWORD = 'xxxxxxxxxxxxxxxxxxxx'
 SERVER_NAME = 'localhost:5000'
