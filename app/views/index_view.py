@@ -1,8 +1,10 @@
 __author__ = 'erik'
 
-from flask import render_template, request
-from app import app, admin_permission
+from flask import render_template
+
+from app import app
 from app.models.userdata import UserDataDB, UserDataView
+
 
 @app.route('/')
 @app.route('/index', methods=['GET', 'POST'])
@@ -41,4 +43,6 @@ def index():
         return render_template("index.jinja2.html", user_data_objects=users, filter_form=filter_form)
 
 
-
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404

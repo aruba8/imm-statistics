@@ -20,5 +20,5 @@ MAIL_PORT = 465
 MAIL_USE_SSL = True
 MAIL_USE_TLS = False
 MAIL_USERNAME = 'biomaks@gmail.com'
-MAIL_PASSWORD = 'xxxxxx'
+MAIL_PASSWORD = 'Rob3tUrm2iL1Righ6it3Hog4'
 SERVER_NAME = 'localhost:5000'

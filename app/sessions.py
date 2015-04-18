@@ -16,9 +16,19 @@ from app.models.session import Session as SessionModel
 from app import db
 
 
+def validate_new_user(username, password, confirm):
+    if username is None or username == '':
+        return False
+    if password != confirm:
+        return False
+    return True
+
+
 class Sessions:
+    def __init__(self):
+        self.db = db
+
     def start_session(self, user_id):
-        # session = {'username': user_id}
         try:
             SessionModel(username=user_id).save()
         except:
@@ -78,19 +88,10 @@ class Sessions:
             user = User(username=username, email=email, password=password_hash, active=True)
             if _id is not None:
                 user.id = _id
-            db.session.add(user)
-            db.session.commit()
+            self.db.session.add(user)
+            self.db.session.commit()
         except IntegrityError as e:
-            log.error("oops, username: " + username + " is already taken")
             log.error(e)
-            return False
-        return True
-
-
-    def validate_new_user(self, username, password, confirm):
-        if username is None or username == '':
-            return False
-        if password != confirm:
             return False
         return True
 
@@ -99,13 +100,22 @@ class Sessions:
         return hashlib.sha256(email + salt).hexdigest()
 
     def save(self, model):
-        db.session.add(model)
-        db.session.commit()
+        self.db.session.add(model)
+        self.db.session.commit()
 
     def update_email_conf(self, email_conf_pre, email_conf):
         email_conf_pre.hash_c = email_conf.hash_c
         email_conf_pre.requested_time = email_conf.requested_time
         email_conf_pre.expiration_date = email_conf.expiration_date
-        db.session.add(email_conf_pre)
-        db.session.commit()
+        self.db.session.add(email_conf_pre)
+        self.db.session.commit()
 
+    def update_password(self, password, user):
+        new_password = self.make_pw_hash(password)
+        user.password = new_password
+        self.db.session.add(user)
+        self.db.session.commit()
+
+    def delete_row(self, obj):
+        self.db.session.delete(obj)
+        self.db.session.commit()

@@ -3,7 +3,7 @@ from app.models.user import User
 __author__ = 'erik'
 from flask_wtf import Form, RecaptchaField
 from wtforms.fields import StringField, PasswordField, SelectField
-from wtforms.validators import DataRequired, Email, EqualTo
+from wtforms.validators import DataRequired, Email, EqualTo, Length
 from pycountry import countries
 
 COUNTRIES = [country.alpha2 for country in countries.objects]
@@ -17,9 +17,10 @@ def create_countries_dict():
 
 
 class SignUpForm(Form):
-    login = StringField('Username', validators=[DataRequired()])
+    login = StringField('Username', validators=[DataRequired(), Length(min=3, max=80)])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired(), EqualTo('confirm', message='Passwords must match')])
+    password = PasswordField('Password', validators=[DataRequired(), EqualTo('confirm', message='Passwords must match'),
+                                                     Length(min=7, max=80)])
     confirm = PasswordField('Confirm')
     country = SelectField(choices=create_countries_dict())
     recaptcha = RecaptchaField()

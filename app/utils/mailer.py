@@ -29,3 +29,11 @@ def send_confirm_email(email_conf, user):
         text_body = "text "
         subject = "Confirmation link"
         send_email(subject, [user.email], text_body, confirm_html)
+
+
+def send_password_recovery_email(reset, user):
+    with app.app_context():
+        confirm_html = render_template("password_recovery_email.html", reset=reset)
+        text_body = "text "
+        subject = "Confirmation link"
+        send_email(subject, [user.email], text_body, confirm_html)
